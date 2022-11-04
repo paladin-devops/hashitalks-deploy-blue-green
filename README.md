@@ -1,0 +1,1 @@
+# hashitalks-deploy-blue-green
