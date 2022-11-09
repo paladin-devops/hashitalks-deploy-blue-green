@@ -49,6 +49,6 @@ resource "waypoint_project" "hashitalks_deploy_blue_green_project" {
 
   data_source_git {
     git_url = "https://github.com/paladin-devops/hashitalks-deploy-blue-green"
-    git_ref = "mvp"
+    git_ref = "main"
   }
 }
