@@ -14,8 +14,8 @@ resource "consul_config_entry" "app_service_resolver" {
   kind = "service-resolver"
 
   config_json = jsonencode({
-    Kind = "service-resolver"
-    Name = "app"
+    Kind          = "service-resolver"
+    Name          = "app"
     DefaultSubset = "blue"
     Subsets = {
       blue = {

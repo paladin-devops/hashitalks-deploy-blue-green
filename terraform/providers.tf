@@ -1,10 +1,10 @@
 provider "consul" {
-  address    = "localhost:8500"
+  address    = var.waypoint_address
   datacenter = "dc1"
 }
 
 provider "vault" {
-  address = "http://192.168.1.242:8200"
+  address = var.vault_address
 }
 
 provider "waypoint" {
