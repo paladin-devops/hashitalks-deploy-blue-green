@@ -50,8 +50,8 @@ func connect(w http.ResponseWriter, r *http.Request) {
 
 	err = db.Ping()
 	if err != nil {
-		fmt.Println("Failed to connect. :(")
+		w.Write([]byte("Failed to connect to the database. :("))
 	}
 
-	fmt.Fprintf(w, "Connected to the database! :)")
+	w.Write([]byte("Connected to the database! :)"))
 }
