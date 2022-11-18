@@ -54,15 +54,6 @@ pipeline "promotion-and-normalize-traffic" {
 }
 
 app "my-app" {
-  config {
-    env = {
-      PALADIN = dynamic("vault", {
-        path = "/secret/data/test"
-        key  = "/data/test"
-      })
-    }
-  }
-
   build {
     use "pack" {}
 
