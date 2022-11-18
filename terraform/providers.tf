@@ -1,10 +1,12 @@
 provider "consul" {
-  address    = var.waypoint_address
+  address    = var.consul_address
   datacenter = "dc1"
+  token      = var.consul_token
 }
 
 provider "vault" {
   address = var.vault_address
+  token   = var.vault_token
 }
 
 provider "waypoint" {

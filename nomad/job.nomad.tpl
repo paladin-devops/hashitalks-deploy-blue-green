@@ -8,12 +8,13 @@ job "${app.name}" {
     network {
       port "http" {
         to = 80
+        static = 80
       }
     }
 
     service {
       name        = "app"
-      port        = 80
+      port        = "http"
       tags        = [ "blue" ]
       canary_tags = [ "green" ]
     }
@@ -50,4 +51,4 @@ job "${app.name}" {
       }
     } // end of task
   } // end of group
-}
+} // end of job

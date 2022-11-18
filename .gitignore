@@ -1,0 +1,3 @@
+# Locally-configured auto-vars files are ignored so that env-specific configs
+# or secrets aren't committed to git.
+*.auto.wpvars
