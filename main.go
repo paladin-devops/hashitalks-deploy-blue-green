@@ -53,6 +53,5 @@ func connect(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Failed to connect. :(")
 	}
 
-	fmt.Printf("Connected to the database!")
-	fmt.Println("Successfully connected! :)")
+	fmt.Fprintf(w, "Connected to the database! :)")
 }
