@@ -99,7 +99,7 @@ app "my-app" {
 variable "username" {
   type = string
   default = dynamic("vault", {
-    "path" = "secret/data/docker"
+    "path" = "kv/data/docker"
     "key"  = "/data/username"
   })
   sensitive = true
@@ -108,7 +108,7 @@ variable "username" {
 variable "password" {
   type = string
   default = dynamic("vault", {
-    path = "secret/data/docker"
+    path = "kv/data/docker"
     key  = "/data/password"
   })
   sensitive = true
