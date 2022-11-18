@@ -8,6 +8,7 @@ job "${app.name}" {
     network {
       port "http" {
         to = 80
+        static = 80
       }
     }
 
