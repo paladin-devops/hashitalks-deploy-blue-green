@@ -13,7 +13,7 @@ job "${app.name}" {
 
     service {
       name        = "app"
-      port        = 80
+      port        = "http"
       tags        = [ "blue" ]
       canary_tags = [ "green" ]
     }
@@ -50,4 +50,4 @@ job "${app.name}" {
       }
     } // end of task
   } // end of group
-}
+} // end of job
