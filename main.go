@@ -11,14 +11,16 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/connect", connect)
-	err := http.ListenAndServe(":80", nil)
+	connectHandler := ConnectHandler{}
+	err := http.ListenAndServe(":80", connectHandler)
 	if err != nil {
 		return
 	}
 }
 
-func connect(w http.ResponseWriter, r *http.Request) {
+type ConnectHandler struct{}
+
+func (c ConnectHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type conn struct {
 		user     string
 		password string
@@ -51,7 +53,7 @@ func connect(w http.ResponseWriter, r *http.Request) {
 	err = db.Ping()
 	if err != nil {
 		w.Write([]byte("Failed to connect to the database. :("))
+	} else {
+		w.Write([]byte("Connected to the database! :)"))
 	}
-
-	w.Write([]byte("Connected to the database! :)"))
 }
