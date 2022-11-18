@@ -142,7 +142,7 @@ variable "postgres_username" {
   })
 }
 
-variable "postgres_username" {
+variable "postgres_password" {
   type      = string
   sensitive = true
   default = dynamic("vault", {
