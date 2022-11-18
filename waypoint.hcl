@@ -62,6 +62,7 @@ app "my-app" {
         image = "devopspaladin/hashitalks-deploy"
         tag   = "latest"
         auth {
+          // Credentials are supplied here for authentication to push to a registry.
           username = var.username
           password = var.password
         }
@@ -69,9 +70,23 @@ app "my-app" {
     }
   }
 
+  config {
+    env = {
+      // The application being deployed expects these environment variables in order
+      // to connect to a database, and they're being supplied via input variables.
+      "USERNAME" = var.postgres_username
+      "PASSWORD" = var.postgres_password
+      "HOST"     = var.postgres_ip
+      "PORT"     = var.postgres_port
+      "DBNAME"   = var.postgres_dbname
+    }
+  }
+
   deploy {
     use "nomad-jobspec" {
       jobspec = templatefile("${path.app}/nomad/job.nomad.tpl", {
+        // The registry username and password are passed to the Nomad job template
+        // so that the Nomad client can pull the image from the Docker registry.
         username = var.username
         password = var.password
       })
@@ -80,7 +95,14 @@ app "my-app" {
 
   release {
     use "nomad-jobspec-canary" {
+      // The task group containing the app whose canary deployment will be
+      // promoted is named "app", so it is explicitly specified here.
       groups = ["app"]
+
+      // If something is wrong with the canary deployment, the input var here allows
+      // the operator to fail the deployment so it is rolled back to the previous
+      // version. By default, it will be promoted.
+      fail_deployment = var.fail_deployment
     }
   }
 }
@@ -107,4 +129,42 @@ variable "password" {
 
 variable "consul_address" {
   type = string
+}
+
+// Vault config sourcing is not required in order to use these variables. They
+// can be overridden with with -var flag or a -var-file.
+variable "postgres_username" {
+  type      = string
+  sensitive = true
+  default = dynamic("vault", {
+    path = "database/creds/readonly"
+    key  = "username"
+  })
+}
+
+variable "postgres_username" {
+  type      = string
+  sensitive = true
+  default = dynamic("vault", {
+    path = "database/creds/readonly"
+    key  = "password"
+  })
+}
+
+variable "postgres_ip" {
+  type = string
+}
+
+variable "postgres_port" {
+  type = number
+}
+
+variable "postgres_dbname" {
+  type    = string
+  default = "postgres"
+}
+
+variable "fail_deployment" {
+  type = bool
+  default = false
 }

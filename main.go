@@ -3,10 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
 	"net/http"
 	"os"
 	"strconv"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -31,7 +32,7 @@ func connect(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	connection := conn{
-		user:     os.Getenv("USER"),
+		user:     os.Getenv("USERNAME"),
 		password: os.Getenv("PASSWORD"),
 		port:     port,
 		host:     os.Getenv("HOST"),
@@ -52,5 +53,6 @@ func connect(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Failed to connect. :(")
 	}
 
+	fmt.Printf("Connected to the database!")
 	fmt.Println("Successfully connected! :)")
 }
