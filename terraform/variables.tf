@@ -9,7 +9,13 @@ variable "docker_password" {
 }
 
 variable "consul_address" {
-  type = string
+  type      = string
+  sensitive = true
+}
+
+variable "consul_token" {
+  type      = string
+  sensitive = true
 }
 
 variable "consul_dc" {
@@ -18,11 +24,18 @@ variable "consul_dc" {
 }
 
 variable "vault_address" {
-  type = string
+  type      = string
+  sensitive = true
+}
+
+variable "vault_token" {
+  type      = string
+  sensitive = true
 }
 
 variable "waypoint_address" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "waypoint_token" {

@@ -3,9 +3,11 @@ resource "consul_config_entry" "app_service_defaults" {
   kind = "service-defaults"
 
   config_json = jsonencode({
-    Kind     = "service-defaults"
-    Protocol = "http"
-    Protocol = "http"
+    Kind             = "service-defaults"
+    Protocol         = "http"
+    Expose           = {}
+    MeshGateway      = {}
+    TransparentProxy = {}
   })
 }
 
@@ -29,12 +31,15 @@ resource "consul_config_entry" "app_service_resolver" {
 }
 
 resource "vault_mount" "kv_secrets_engine" {
-  path = "secret/"
-  type = "kv-v2"
+  path = "kv/"
+  type = "kv"
+  options = {
+    "version" = "2"
+  }
 }
 
 resource "vault_generic_secret" "docker_credentials" {
-  path      = "secret/docker"
+  path      = "kv/docker"
   data_json = <<EOT
 {
   "username":   "${var.docker_username}",
