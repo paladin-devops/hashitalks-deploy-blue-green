@@ -1,5 +1,5 @@
 provider "consul" {
-  address    = var.waypoint_address
+  address    = var.consul_address
   datacenter = "dc1"
 }
 
